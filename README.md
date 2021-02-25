@@ -25,6 +25,7 @@ dsquery server
 ```
 
 # information package
+```command
 7z.exe -r -v6m -padmin a c:\test.7z C:\AppServ\www\import*.*
 7z.exe x -padmin test.7z.001 -oc:\xl
 
@@ -33,6 +34,7 @@ Rar.exe x -padmin c:\test.part01.rar c:\xl
 
 makecab /d compressiontype=lzx C:\Users\lsass.txt C:\Users\lsass.cab >> C:\Users\info.txt
 expand.exe lsass.cab -f:* .
+```
 
 # log clear
 wc -l ~/.bash_history
