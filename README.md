@@ -3,6 +3,7 @@
 
 
 # Domain control
+```command
 net user
 net user /domain
 net group /domain
@@ -21,6 +22,7 @@ dsquery group
 dsquery user
 dsquery subnet
 dsquery server
+```
 
 # information package
 7z.exe -r -v6m -padmin a c:\test.7z C:\AppServ\www\import*.*
